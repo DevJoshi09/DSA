@@ -44,6 +44,31 @@ void reverse(Node* &head,Node* &tail,int n){
     tail = temp;
 
 }
+
+// reverse by recursion
+void reverse_rr(Node* &head, Node* curr, Node* prev){
+    // base case
+    if(curr == NULL){
+        head = prev;
+        return ;
+    }
+
+    Node* forward = curr->next;
+    
+    reverse_rr(head,forward,curr);
+    curr->next = prev;
+
+}
+
+void print(Node* head){
+
+    Node* temp = head;
+    while(temp != NULL){
+        cout<<"->"<<temp->data;
+        temp = temp->next;
+    }
+
+}
 int main(){
     Node* head = NULL;
     Node* tail = NULL;
@@ -60,12 +85,12 @@ int main(){
         cout<<endl;
     }
 
-    reverse(head,tail,n);
-    Node* temp = head;
-    while(temp != NULL){
-        cout<<"->"<<temp->data;
-        temp = temp->next;
-    }
+    // reverse(head,tail,n);
+    Node* curr = head;
+    Node* forward = head;
+    Node* prev = NULL;
+    reverse_rr(head,curr,prev);
+    print(head);
     
     return 0;
 }
