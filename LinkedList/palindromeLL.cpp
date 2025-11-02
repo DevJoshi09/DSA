@@ -29,57 +29,58 @@ void insert(Node* &head,int data){
         tail = temp;
     }
 }
-// copy Main list
-Node* copy(Node* head){
-
-    Node* newHead = NULL;
-    Node* newtail = NULL;
-
-    while(head != NULL){
-
-        Node* temp = new Node(head->data);
-
-        if(newHead == NULL){
-            newHead = temp;
-            newtail = temp;
-        }else{
-            newtail->next = temp;
-            newtail = temp;
-        }
-        head = head->next;
-    }
-    return newHead;
-}
-
-//  reverse
-void reverse(Node* &reverseNode){
-    Node* prev = NULL;
-    Node* curr = reverseNode;
-    Node* forward = NULL;
-    
-    while(curr != NULL){
-        forward = curr->next;
-        curr->next = prev;
-        prev = curr;
-        curr = forward;
-    }
-    reverseNode = prev;
-}
-
 // Approach 1
-bool palindrome(Node* head, Node* reverseHead){
-    // base case
-    if(head == NULL && reverseHead == NULL) {
-        return true;
+/*
+    // copy Main list
+    Node* copy(Node* head){
+
+        Node* newHead = NULL;
+        Node* newtail = NULL;
+
+        while(head != NULL){
+
+            Node* temp = new Node(head->data);
+
+            if(newHead == NULL){
+                newHead = temp;
+                newtail = temp;
+            }else{
+                newtail->next = temp;
+                newtail = temp;
+            }
+            head = head->next;
+        }
+        return newHead;
     }
 
-    if(head->data != reverseHead->data){
-        return false;
+    //  reverse
+    void reverse(Node* &reverseNode){
+        Node* prev = NULL;
+        Node* curr = reverseNode;
+        Node* forward = NULL;
+        
+        while(curr != NULL){
+            forward = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = forward;
+        }
+        reverseNode = prev;
     }
-    
-    return palindrome(head->next,reverseHead->next);
-}
 
+    bool palindrome(Node* head, Node* reverseHead){
+        // base case
+        if(head == NULL && reverseHead == NULL) {
+            return true;
+        }
+
+        if(head->data != reverseHead->data){
+            return false;
+        }
+        
+        return palindrome(head->next,reverseHead->next);
+    }
+*/
 void print(Node* head){
     Node* temp = head;
     while(temp != NULL){
@@ -88,6 +89,62 @@ void print(Node* head){
     }
     cout<<endl;
 }
+
+Node* reverse(Node* middle){
+
+    Node* prev = NULL;
+    Node* curr = middle;
+    Node* forward = NULL;
+    
+    while(curr != NULL){
+        forward = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = forward;
+    }
+
+    return prev;
+}
+
+Node* findMiddle(Node* &head){
+    Node* slow = head;
+    Node* fast = head;
+    while(fast != NULL && fast->next != NULL){
+        fast = fast->next->next;
+        slow = slow->next;
+    }
+    return slow;
+}
+
+bool palindrome(Node* head){
+
+    // step 1: find middle element
+    Node* middle = findMiddle(head);
+
+    // step 2 : reverse nodes after middle element
+    middle->next = reverse(middle->next);
+
+    // step 3 : compare both half
+    Node* head1 = head;
+    Node* head2 = middle->next;
+    
+    while(head2 != NULL){
+
+        if(head1->data != head2->data ){
+            return false;
+        }
+        head1 = head1->next;
+        head2 = head2->next;
+    }
+
+    // step 4 : repeate step 2
+    middle->next = reverse(middle->next);
+    return true;
+}
+
+
+
+
 int main(){
     Node* head = NULL;
 
@@ -101,15 +158,19 @@ int main(){
         insert(head,data);
     }
     
-    // make a copy node so that we don't overrite the original node
-    Node* reverseNode = copy(head);
+    // // make a copy node so that we don't overrite the original node
+    // Node* reverseNode = copy(head);
 
-    print(head);
-    print(reverseNode);
+    // print(head);
+    // print(reverseNode);
 
-    if(palindrome(head,reverseNode)) 
+    if(palindrome(head)){ 
         cout<<"true";
-    else 
+      
+    }
+    else{ 
         cout<<"false";
+       
+    }
     return 0;
 }
