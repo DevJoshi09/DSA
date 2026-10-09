@@ -1,4 +1,4 @@
-// remove du[licates form sorted linked list
+// remove duplicates form sorted linked list
 #include<iostream>
 using namespace std;
 

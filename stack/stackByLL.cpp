@@ -50,14 +50,15 @@ class stack{
         }
         // insertion
         void push(int data){
-            top++;
+            
             if(top < size ){
+                top++;
                 Node* temp = new Node(data);
                 temp->next = head;
                 head = temp;
                 
-                if(top == size - 1) cout<<"|_"<<temp->data<<"_|"<<endl;
-                else cout<<"| "<<temp->data<<" |"<<endl;
+                // if(top == size - 1) cout<<"|_"<<temp->data<<"_|"<<endl;
+                // else cout<<"| "<<temp->data<<" |"<<endl;
 
             }else{
                 cout<<"Stack over flow...";
@@ -75,14 +76,21 @@ class stack{
                 top--;
                 temp->next = NULL;
                 delete temp;
-                print(head,top,size);
+                // print(head,top,size);
             }
         }
+        // printing
+        void p(){
+                print(head,top,size);
+        }
+    
         // top element
         void Top(){
             cout<<head->data;
         }
+        
 };
+
 int main(){
     int n;
     cout<<"Enter size of stack :";
@@ -92,10 +100,10 @@ int main(){
     stk.push(1);
     stk.push(2);
     stk.push(2);
-    stk.pop();
-    stk.pop();
-    stk.pop();
-    stk.pop();
-
+    // stk.pop();
+    // stk.pop();
+    // stk.pop();
+    // stk.pop();
+    stk.p();
     return 0;
 }
